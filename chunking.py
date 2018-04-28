@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Mar 20 16:20:23 2018
+Created on Fri Apr 27 10:36:20 2018
 
 @author: Arafat
 """
+
 
 import nltk
 from nltk.corpus import state_union
@@ -63,7 +64,12 @@ def process_content():
         for i in tokenized[:5]:
             words = nltk.word_tokenize(i)
             tagged = nltk.pos_tag(words)
-            print(tagged,'\n')
+            chunk_gram = r""" Chunk: {<RB.?>*<VB.?>*<NNP><NN>?} """
+            chunkParser = nltk.RegexpParser(chunk_gram)
+            chunked = chunkParser.parse(tagged)
+            #chunked.draw()
+            print(chunked)
+            
     
     except Exception as e:
         print(str(e))
