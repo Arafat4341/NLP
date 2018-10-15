@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Apr 27 10:36:20 2018
+Created on Sun Oct 14 23:19:35 2018
 
 @author: Arafat
 """
@@ -10,6 +10,14 @@ import nltk
 from nltk.corpus import state_union
 from nltk.tokenize import PunktSentenceTokenizer
 
+
+"""
+The main objective of using chunks is to better understand the sentence. 
+Who the sentence is talking to. There may be multiple nouns in a sentense. 
+We can find exactly which noun the sentence is talking about by dividing the
+sentence into chunks and have a more precise understanding.
+
+"""
 
 """
 POS tag list:
@@ -64,12 +72,18 @@ def process_content():
         for i in tokenized[:5]:
             words = nltk.word_tokenize(i)
             tagged = nltk.pos_tag(words)
-            chunk_gram = r""" Chunk: {<RB.?>*<VB.?>*<NNP><NN>?} """
-            chunkParser = nltk.RegexpParser(chunk_gram)
-            chunked = chunkParser.parse(tagged)
-            #chunked.draw()
-            print(chunked)
+            chunkGram = r"""chunk: {<RB.>?*<VB.?>*<NNP>+<NN>}"""
             
+            chunkParser = nltk.RegexpParser(chunkGram)
+            chunked = chunkParser.parse(tegged)
+            
+            
+            chunked.draw()
+            
+            
+            
+            
+            print(tagged,'\n')
     
     except Exception as e:
         print(str(e))
