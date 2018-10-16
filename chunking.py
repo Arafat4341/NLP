@@ -17,6 +17,15 @@ Who the sentence is talking to. There may be multiple nouns in a sentense.
 We can find exactly which noun the sentence is talking about by dividing the
 sentence into chunks and have a more precise understanding.
 
+
+Chunking is also called shallow parsing and it's basically the identification
+of parts of speech and short phrases (like noun phrases). Part of speech
+tagging tells you whether words are nouns, verbs, adjectives, etc, but it 
+doesn't give you any clue about the structure of the sentence or phrases in 
+the sentence. Sometimes it's useful to have more information than just the 
+parts of speech of words, 
+but you don't need the full parse tree that you would get from parsing.
+
 """
 
 """
@@ -72,18 +81,17 @@ def process_content():
         for i in tokenized[:5]:
             words = nltk.word_tokenize(i)
             tagged = nltk.pos_tag(words)
-            chunkGram = r"""chunk: {<RB.>?*<VB.?>*<NNP>+<NN>}"""
+            chunkGram = r"""chunk: {<RB.?>*<VB.?>*<NNP>+<NN>}"""
             
             chunkParser = nltk.RegexpParser(chunkGram)
-            chunked = chunkParser.parse(tegged)
+            chunked = chunkParser.parse(tagged)
+            
+            print(chunked)
             
             
-            chunked.draw()
             
             
-            
-            
-            print(tagged,'\n')
+            #print(tagged,'\n')
     
     except Exception as e:
         print(str(e))
